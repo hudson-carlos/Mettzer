@@ -1,16 +1,20 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
-const context = createContext();
+export const TodoContext = createContext();
 
-function provider({ children }) {
+function TodoProvider({ children }) {
+  const [art, setArt] = useState('');
 
-  const value = {};
+  const value = {
+    art, 
+    setArt,
+  };
 
   return (
-    <context.Provider value={ value }>
+    <TodoContext.Provider value={ value }>
       {children}
-    </context.Provider>
+    </TodoContext.Provider>
   );
 }
 
-export default provider;
+export default TodoProvider;
