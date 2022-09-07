@@ -4,10 +4,13 @@ export const TodoContext = createContext();
 
 function TodoProvider({ children }) {
   const [art, setArt] = useState('');
+  const [data, setData] = useState([]);
 
   const value = {
     art, 
     setArt,
+    data,
+    setData,
   };
 
   return (
