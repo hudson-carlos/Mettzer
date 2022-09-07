@@ -7,12 +7,13 @@ export default function Search() {
     art,
     setArt,
     setData,
+    setLoading
   } = useContext(TodoContext);
 
   async function getApi() {
     const response = await api(art, 1);
     setData(response);
-    console.log(response);
+    setLoading("");
   } 
 
   return (
@@ -22,7 +23,12 @@ export default function Search() {
         value={art} 
         onChange={({currentTarget}) => setArt(currentTarget.value)}
       />
-      <button onClick={getApi} >Search</button>
+      <button onClick={() => {
+        setLoading("Loading...")
+        getApi()
+      }}>
+        Search
+      </button>
     </header>
   );  
 }
