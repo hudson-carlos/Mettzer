@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TodoContext } from "../provider";
 import api from "../api";
 
@@ -7,11 +7,20 @@ export default function Search() {
     art,
     setArt,
     setData,
-    setLoading
+    setLoading,
+    page,
+    setPage
   } = useContext(TodoContext);
 
+  useEffect(() => {
+    if(art) {
+      getApi();
+      console.log("test"); 
+    } 
+  },[page]);  
+
   async function getApi() {
-    const response = await api(art, 1);
+    const response = await api(art, page);
     setData(response);
     setLoading("");
   } 
@@ -25,7 +34,8 @@ export default function Search() {
       />
       <button onClick={() => {
         setLoading("Loading...")
-        getApi()
+        getApi();
+        setPage(1);
       }}>
         Search
       </button>

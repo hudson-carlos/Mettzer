@@ -2,17 +2,22 @@ import { useContext } from "react";
 import Search from "../componets/search"
 import { TodoContext } from "../provider";
 import Card from '../componets/card';
+import Pagination from "../componets/pagination";
 
 export default function Home() {
   const { 
     data,
     loading,
-    setLoading,
   } = useContext(TodoContext);
 
   function loadingCard() {
-    if (loading) return <h1>Loading...</h1>;
-    return data.map(artigo => (<Card obj={artigo}  />)); 
+    if (loading) return <h1>{loading}</h1>;
+    return (
+      <>  
+        {data.map(artigo => (<Card obj={artigo}  />))}
+        {(!data.length) ? null : <Pagination />} 
+      </>
+    );
   }
 
   return (

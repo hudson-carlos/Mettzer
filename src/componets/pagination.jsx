@@ -7,20 +7,16 @@ export default () => {
     setPage
   } = useContext(TodoContext);
 
-  function PreviousPage() {
+  function previousPage() {
     if (page > 1) setPage(page - 1);
   }
 
-  function nextPage() {
-    if (page > 1) setPage(page - 1);
-  }
 
   return (
     <div>
-      <button>1</button>
-      <button>Previous</button>
-      <button>{page}</button>
-      <button>Next</button>
+      <button onClick={previousPage}>Previous</button>
+      <span>{page}</span>
+      <button onClick={() => setPage(page + 1)}>Next</button>
     </div>
   );
 }
