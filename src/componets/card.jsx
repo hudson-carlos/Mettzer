@@ -1,34 +1,28 @@
-import { useContext, useState } from "react";
-import { TodoContext } from "../provider";
-
-export default (props) => {
-  const [favorite, setfavorite] = useState(false);
-  const { data, setData } = useContext(TodoContext)
-  const { id, title, types, authors, description, fulltextUrls } = props.obj;
-
-  function likeOrDisliked(article, like) {
-    const newData = data.map(obj => {
-      if (obj.id === article.id) obj.favorite = like;
+export default ({obj, listArticle, setListArticle}) => {
+  const { id, title, types, authors, description, fulltextUrls, favorite } = obj;
+  
+  function likeOrDisliked(like) {
+    const newData = listArticle.map(obj => {
+      if (id === obj.id) obj.favorite = like;
       return obj;    
     });
-    setData(newData);
-    setfavorite(like);
+    setListArticle(newData);
   }
 
   function addLocalStorage() {
     let list = JSON.parse(localStorage.getItem('favorites'));
-    const article = { id, title, types, authors, description, fulltextUrls };     
-      
-    if (list.some(({ id }) => id === article.id )) {
-      list = list.filter(({ id }) => id !== article.id);
+
+    
+    if (list.some(({ id }) => id === obj.id )) {
+      likeOrDisliked(false);
+      list = list.filter(({ id }) => id !== obj.id);
       localStorage.setItem("favorites", JSON.stringify(list));
-      likeOrDisliked(article, false);
     } 
 
     else {
-      list.push(article);
+      likeOrDisliked(true)
+      list.push(obj);
       localStorage.setItem("favorites", JSON.stringify(list));
-      likeOrDisliked(article, true)
     }
   }
 
@@ -40,7 +34,7 @@ export default (props) => {
       {authors.map(author => (<p>{author}</p>))}
       <textarea>{description}</textarea>
       {fulltextUrls.map(url => (<a href={url}>{url}</a>))}
-      <p onClick={addLocalStorage}>{(favorite) ? 'like' : 'disliked'}</p>
+      <p onClick={addLocalStorage}>{(favorite) ? 'Disliked': 'Like'}</p>
     </div>
   ); 
 }

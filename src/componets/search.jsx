@@ -35,7 +35,7 @@ export default function Search() {
   } 
 
   return (
-    <header>
+    <>
       <input 
         type="text" 
         value={art} 
@@ -48,6 +48,6 @@ export default function Search() {
       }}>
         Search
       </button>
-    </header>
+    </>
   );  
 }
